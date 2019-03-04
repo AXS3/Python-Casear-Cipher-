@@ -1,11 +1,11 @@
 # Caesar Cipher
-SYMBOLS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890!"£$%^&*()-=+_:@;?></# '
+SYMBOLS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890'
 MAX_KEY_SIZE = len(SYMBOLS)
 def getMode():
     while True:
         print('Do you wish to encrypt or decrypt a message?')
         mode = input().lower()
-        if mode in ['encrypt', 'e', 'decrypt', 'd','brute','b']:
+        if mode in ['encrypt', 'e', 'decrypt', 'd']:
             return mode
         else:
             print('Enter either "encrypt" or "e" or "decrypt" or "d".')
@@ -25,9 +25,10 @@ def getTranslatedMessage(mode, message, key):
     translated = ''
     for symbol in message:
         symbolIndex = SYMBOLS.find(symbol)
-        if symbolIndex == -1:
+        if symbolIndex == -1: 
             translated += symbol
         else:
+            # Encrypt or decrypt
             symbolIndex += key
             if symbolIndex >= len(SYMBOLS):
                 symbolIndex -= len(SYMBOLS)
@@ -38,11 +39,6 @@ def getTranslatedMessage(mode, message, key):
 while True:
     mode = getMode()
     message = getMessage()
-    if mode != 'b':
-        key = getKey()
+    key = getKey()
     print('Your translated text is:')
-    if mode != 'b': 
-        print(getTranslatedMessage(mode, message, key))
-    else:
-        for key in range(1, MAX_KEY_SIZE + 1):
-            print(key,getTranslatedMessage('decrypt',message,key))
+    print(getTranslatedMessage(mode, message, key))
